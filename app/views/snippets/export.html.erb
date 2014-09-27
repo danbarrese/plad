@@ -1,0 +1,34 @@
+<h1>Export Snippets</h1>
+
+<!-- Show errors with creation if any. -->
+<% if @errors.size > 0 %>
+    <!--
+    <div id="error_explanation" class="error" style="margin-bottom:1em;">
+        <h2><%= pluralize(@errors.size, "error") %> prevented export:</h2>
+        <ol>
+            <% @errors.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ol>
+    </div>
+    -->
+    <p>Choose an IDE:
+        <ol>
+            <li><%= link_to "Vim \"IDE\"", export_path + "?ide=vim" %></li>
+                <ul>
+                    <li><%= link_to "Java", export_path + "?ide=vim&langs=java" %></li>
+                    <li><%= link_to "Python 3", export_path + "?ide=vim&langs=python3" %></li>
+                    <li><%= link_to "Ruby 2", export_path + "?ide=vim&langs=ruby2" %></li>
+                    <li><%= link_to "BASH 4", export_path + "?ide=vim&langs=bash4" %></li>
+                    <li><%= link_to "Vim Script", export_path + "?ide=vim&langs=vim" %></li>
+                    <li><%= link_to "Scala", export_path + "?ide=vim&langs=scala" %></li>
+                    <li><%= link_to "Js", export_path + "?ide=vim&langs=js" %></li>
+                    <li><%= link_to "(All languages)", export_path + "?ide=vim" %></li>
+                </ul>
+            <li><%= link_to "IntelliJ IDEA", export_path + "?ide=idea" %></li>
+            <li><%= link_to "NetBeans", export_path + "?ide=nb" %></li>
+        </ol>
+    </p>
+<% else %>
+    <pre><%= @xml %></pre>
+<% end %>

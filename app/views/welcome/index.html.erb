@@ -1,0 +1,13 @@
+<h1>Programming Language Agnostic Development</h1>
+
+<ul>
+    <li><%= link_to "View all snippets", snippets_path %></li>
+    <li><%= link_to "+ Create new snippets", new_snippet_path %></li>
+</ul>
+
+<h2>Favorites</h2>
+<ul>
+    <li><%= link_to "View all Python 3 snippets", snippets_path + "?langs=python3" %></li>
+    <li><%= link_to "View all Scala snippets", snippets_path + "?langs=scala" %></li>
+    <li><%= link_to "View all Vim snippets", snippets_path + "?langs=vim" %></li>
+</ul>
