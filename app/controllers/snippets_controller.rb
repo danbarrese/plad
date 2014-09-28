@@ -3,6 +3,56 @@ require 'builder'
 class SnippetsController < ApplicationController
     helper_method :sort_column, :sort_direction
 
+    def saveSnippetViaAjax
+        # Define params.
+        lang = params[:lang]
+        trigger = params[:trigger]
+        snippet = params[:snippet]
+        puts "lang=" + lang
+        puts "trigger=" + trigger
+        puts "snippet=" + snippet
+
+        # Find the snippet object.
+        s = Snippet.find_by trigger: trigger
+        case lang
+        when "ruby2"
+            s.ruby2 = snippet
+        when "bash4"
+            s.bash4 = snippet
+        when "vim"
+            s.vim = snippet
+        when "java"
+            s.java = snippet
+        when "vbs"
+            s.vbs = snippet
+        when "python3"
+            s.python3 = snippet
+        when "js"
+            s.js = snippet
+        when "winshell"
+            s.winshell = snippet
+        when "powershell"
+            s.powershell = snippet
+        when "groovy"
+            s.groovy = snippet
+        when "c"
+            s.c = snippet
+        when "cpp"
+            s.cpp = snippet
+        when "scala"
+            s.scala = snippet
+        when "erlang"
+            s.erlang = snippet
+        when "clojure"
+            s.clojure = snippet
+        when "rails4"
+            s.rails4 = snippet
+        end
+        puts s.save
+
+        render nothing: true
+    end
+
     def index #{{{
         #@snippets = sort(Snippet.all)
         @snippets = Snippet.order(sort_column + " " + sort_direction)

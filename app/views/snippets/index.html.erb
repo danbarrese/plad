@@ -3,9 +3,8 @@
 <table class="snippets">
 
     <tr>
-        <th>View</th>
-        <th>Edit</th>
-        <th>Del</th>
+        <th>V</th>
+        <th>E</th>
         <th><%= sortable "trigger" %></th>
         <th><%= sortable "links" %></th>
         <th><%= sortable "pre" %></th>
@@ -63,9 +62,9 @@
 
     <% @snippets.each do |s| %>
     <tr>
-        <td><%= link_to "View", s, :class => "view" %></td>
-        <td><%= link_to "Edit", edit_snippet_path(s.id), :class => "edit" %></td>
-        <td><%= link_to "Del", snippet_path(s), method: :delete, data: {confirm: 'Are you sure?'}, :class => "delete" %></td>
+        <td><%= link_to "V", s, :class => "view" %></td>
+        <td><%= link_to "E", edit_snippet_path(s.id), :class => "edit" %></td>
+        <!--<td>%= link_to "Del", snippet_path(s), method: :delete, data: {confirm: 'Are you sure?'}, :class => "delete" %></td>-->
         <td><pre><%= s.trigger %></pre></td>
         <td><pre><%= s.links %></pre></td>
         <td><pre><%= s.pre %></pre></td>
@@ -81,7 +80,18 @@
             <td><pre><%= s.vim %></pre></td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'java') %>
-            <td><pre><%= s.java %></pre></td>
+            <td>
+                <span class="snippet">
+                    <a id="<%= 'java_' + s.trigger + '_link' %>" href="" onclick="toggle(<%= '\'java_' + s.trigger + '\'' %>); return false;">&nbsp;&nbsp;</a>
+                </span>
+                <pre id="<%= 'java_' + s.trigger + '_snippet' %>"><%= s.java %></pre>
+                <div id="<%= 'java_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'java_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'java_' + s.trigger + '\'' %>, 'java', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'java_' + s.trigger + '\'' %>, <%= '\'java_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'vbs') %>
             <td><pre><%= s.vbs %></pre></td>
@@ -108,7 +118,18 @@
             <td><pre><%= s.cpp %></pre></td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'scala') %>
-            <td><pre><%= s.scala %></pre></td>
+            <td>
+                <span class="snippet">
+                    <a id="<%= 'scala_' + s.trigger + '_link' %>" href="" onclick="toggle(<%= '\'scala_' + s.trigger + '\'' %>); return false;">&nbsp;&nbsp;</a>
+                </span>
+                <pre id="<%= 'scala_' + s.trigger + '_snippet' %>"><%= s.scala %></pre>
+                <div id="<%= 'scala_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'scala_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'scala_' + s.trigger + '\'' %>, 'scala', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'scala_' + s.trigger + '\'' %>, <%= '\'scala_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'erlang') %>
             <td><pre><%= s.erlang %></pre></td>

@@ -46,3 +46,4 @@ end
 
 gem 'builder'
 gem 'yaml_db'
+gem 'sprockets'

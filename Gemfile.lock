@@ -120,6 +120,7 @@ DEPENDENCIES
   rails (= 4.0.4)
   sass-rails (~> 4.0.2)
   sdoc
+  sprockets
   sqlite3
   therubyracer (= 0.10.2)
   turbolinks
