@@ -31,6 +31,9 @@
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'js') %>
             <th><%= sortable "js", "JavaScript" %></th>
         <% end %>
+        <% if !params[:langs] or (params[:langs] and params[:langs].include? 'jquery') %>
+            <th><%= sortable "jquery", "jQuery" %></th>
+        <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'winshell') %>
             <th><%= sortable "winshell", "Windows Shell" %></th>
         <% end %>
@@ -66,24 +69,77 @@
         <td><%= link_to "E", edit_snippet_path(s.id), :class => "edit" %></td>
         <!--<td>%= link_to "Del", snippet_path(s), method: :delete, data: {confirm: 'Are you sure?'}, :class => "delete" %></td>-->
         <td><pre><%= s.trigger %></pre></td>
-        <td><pre><%= s.links %></pre></td>
-        <td><pre><%= s.pre %></pre></td>
-        <td><pre><%= s.category %></pre></td>
-        <td><pre><%= s.desc %></pre></td>
+        <td ondblclick="toggle(<%= '\'links_' + s.trigger + '\'' %>); return false;">
+            <pre id="<%= 'links_' + s.trigger + '_snippet' %>"><%= s.links %></pre>
+            <div id="<%= 'links_' + s.trigger %>" style="display: none;">
+                <textarea id="<%= 'links_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                <br/>
+                <button class="submit" onclick="saveSnippet(<%= '\'links_' + s.trigger + '\'' %>, 'links', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                <button class="cancel" onclick="cancelSnippetEdit(<%= '\'links_' + s.trigger + '\'' %>, <%= '\'links_' + s.trigger + '_snippet\'' %>);">cancel</button>
+            </div>
+        </td>
+        <td ondblclick="toggle(<%= '\'pre_' + s.trigger + '\'' %>); return false;">
+            <pre id="<%= 'pre_' + s.trigger + '_snippet' %>"><%= s.pre %></pre>
+            <div id="<%= 'pre_' + s.trigger %>" style="display: none;">
+                <textarea id="<%= 'pre_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                <br/>
+                <button class="submit" onclick="saveSnippet(<%= '\'pre_' + s.trigger + '\'' %>, 'pre', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                <button class="cancel" onclick="cancelSnippetEdit(<%= '\'pre_' + s.trigger + '\'' %>, <%= '\'pre_' + s.trigger + '_snippet\'' %>);">cancel</button>
+            </div>
+        </td>
+        <td ondblclick="toggle(<%= '\'category_' + s.trigger + '\'' %>); return false;">
+            <pre id="<%= 'category_' + s.trigger + '_snippet' %>"><%= s.category %></pre>
+            <div id="<%= 'category_' + s.trigger %>" style="display: none;">
+                <textarea id="<%= 'category_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                <br/>
+                <button class="submit" onclick="saveSnippet(<%= '\'category_' + s.trigger + '\'' %>, 'category', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                <button class="cancel" onclick="cancelSnippetEdit(<%= '\'category_' + s.trigger + '\'' %>, <%= '\'category_' + s.trigger + '_snippet\'' %>);">cancel</button>
+            </div>
+        </td>
+        <td ondblclick="toggle(<%= '\'desc_' + s.trigger + '\'' %>); return false;">
+            <pre id="<%= 'desc_' + s.trigger + '_snippet' %>"><%= s.desc %></pre>
+            <div id="<%= 'desc_' + s.trigger %>" style="display: none;">
+                <textarea id="<%= 'desc_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                <br/>
+                <button class="submit" onclick="saveSnippet(<%= '\'desc_' + s.trigger + '\'' %>, 'desc', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                <button class="cancel" onclick="cancelSnippetEdit(<%= '\'desc_' + s.trigger + '\'' %>, <%= '\'desc_' + s.trigger + '_snippet\'' %>);">cancel</button>
+            </div>
+        </td>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'ruby2') %>
-            <td><pre><%= s.ruby2 %></pre></td>
+            <td ondblclick="toggle(<%= '\'ruby2_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'ruby2_' + s.trigger + '_snippet' %>"><%= s.ruby2 %></pre>
+                <div id="<%= 'ruby2_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'ruby2_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'ruby2_' + s.trigger + '\'' %>, 'ruby2', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'ruby2_' + s.trigger + '\'' %>, <%= '\'ruby2_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'bash4') %>
-            <td><pre><%= s.bash4 %></pre></td>
+            <td ondblclick="toggle(<%= '\'bash4_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'bash4_' + s.trigger + '_snippet' %>"><%= s.bash4 %></pre>
+                <div id="<%= 'bash4_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'bash4_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'bash4_' + s.trigger + '\'' %>, 'bash4', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'bash4_' + s.trigger + '\'' %>, <%= '\'bash4_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'vim') %>
-            <td><pre><%= s.vim %></pre></td>
+            <td ondblclick="toggle(<%= '\'vim_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'vim_' + s.trigger + '_snippet' %>"><%= s.vim %></pre>
+                <div id="<%= 'vim_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'vim_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'vim_' + s.trigger + '\'' %>, 'vim', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'vim_' + s.trigger + '\'' %>, <%= '\'vim_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'java') %>
-            <td>
-                <span class="snippet">
-                    <a id="<%= 'java_' + s.trigger + '_link' %>" href="" onclick="toggle(<%= '\'java_' + s.trigger + '\'' %>); return false;">&nbsp;&nbsp;</a>
-                </span>
+            <td ondblclick="toggle(<%= '\'java_' + s.trigger + '\'' %>); return false;">
                 <pre id="<%= 'java_' + s.trigger + '_snippet' %>"><%= s.java %></pre>
                 <div id="<%= 'java_' + s.trigger %>" style="display: none;">
                     <textarea id="<%= 'java_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
@@ -94,34 +150,106 @@
             </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'vbs') %>
-            <td><pre><%= s.vbs %></pre></td>
+            <td ondblclick="toggle(<%= '\'vbs_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'vbs_' + s.trigger + '_snippet' %>"><%= s.vbs %></pre>
+                <div id="<%= 'vbs_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'vbs_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'vbs_' + s.trigger + '\'' %>, 'vbs', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'vbs_' + s.trigger + '\'' %>, <%= '\'vbs_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'python3') %>
-            <td><pre><%= s.python3 %></pre></td>
+            <td ondblclick="toggle(<%= '\'python3_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'python3_' + s.trigger + '_snippet' %>"><%= s.python3 %></pre>
+                <div id="<%= 'python3_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'python3_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'python3_' + s.trigger + '\'' %>, 'python3', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'python3_' + s.trigger + '\'' %>, <%= '\'python3_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'js') %>
-            <td><pre><%= s.js %></pre></td>
+            <td ondblclick="toggle(<%= '\'js_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'js_' + s.trigger + '_snippet' %>"><%= s.js %></pre>
+                <div id="<%= 'js_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'js_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'js_' + s.trigger + '\'' %>, 'js', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'js_' + s.trigger + '\'' %>, <%= '\'js_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
+        <% end %>
+        <% if !params[:langs] or (params[:langs] and params[:langs].include? 'jquery') %>
+            <td ondblclick="toggle(<%= '\'jquery_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'jquery_' + s.trigger + '_snippet' %>"><%= s.jquery %></pre>
+                <div id="<%= 'jquery_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'jquery_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'jquery_' + s.trigger + '\'' %>, 'jquery', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'jquery_' + s.trigger + '\'' %>, <%= '\'jquery_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'winshell') %>
-            <td><pre><%= s.winshell %></pre></td>
+            <td ondblclick="toggle(<%= '\'winshell_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'winshell_' + s.trigger + '_snippet' %>"><%= s.winshell %></pre>
+                <div id="<%= 'winshell_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'winshell_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'winshell_' + s.trigger + '\'' %>, 'winshell', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'winshell_' + s.trigger + '\'' %>, <%= '\'winshell_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'powershell') %>
-            <td><pre><%= s.powershell %></pre></td>
+            <td ondblclick="toggle(<%= '\'powershell_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'powershell_' + s.trigger + '_snippet' %>"><%= s.powershell %></pre>
+                <div id="<%= 'powershell_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'powershell_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'powershell_' + s.trigger + '\'' %>, 'powershell', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'powershell_' + s.trigger + '\'' %>, <%= '\'powershell_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'groovy') %>
-            <td><pre><%= s.groovy %></pre></td>
+            <td ondblclick="toggle(<%= '\'groovy_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'groovy_' + s.trigger + '_snippet' %>"><%= s.groovy %></pre>
+                <div id="<%= 'groovy_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'groovy_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'groovy_' + s.trigger + '\'' %>, 'groovy', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'groovy_' + s.trigger + '\'' %>, <%= '\'groovy_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'c') %>
-            <td><pre><%= s.c %></pre></td>
+            <td ondblclick="toggle(<%= '\'c_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'c_' + s.trigger + '_snippet' %>"><%= s.c %></pre>
+                <div id="<%= 'c_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'c_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'c_' + s.trigger + '\'' %>, 'c', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'c_' + s.trigger + '\'' %>, <%= '\'c_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'cpp') %>
-            <td><pre><%= s.cpp %></pre></td>
+            <td ondblclick="toggle(<%= '\'cpp_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'cpp_' + s.trigger + '_snippet' %>"><%= s.cpp %></pre>
+                <div id="<%= 'cpp_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'cpp_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'cpp_' + s.trigger + '\'' %>, 'cpp', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'cpp_' + s.trigger + '\'' %>, <%= '\'cpp_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'scala') %>
-            <td>
-                <span class="snippet">
-                    <a id="<%= 'scala_' + s.trigger + '_link' %>" href="" onclick="toggle(<%= '\'scala_' + s.trigger + '\'' %>); return false;">&nbsp;&nbsp;</a>
-                </span>
+            <td ondblclick="toggle(<%= '\'scala_' + s.trigger + '\'' %>); return false;">
                 <pre id="<%= 'scala_' + s.trigger + '_snippet' %>"><%= s.scala %></pre>
                 <div id="<%= 'scala_' + s.trigger %>" style="display: none;">
                     <textarea id="<%= 'scala_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
@@ -132,13 +260,37 @@
             </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'erlang') %>
-            <td><pre><%= s.erlang %></pre></td>
+            <td ondblclick="toggle(<%= '\'erlang_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'erlang_' + s.trigger + '_snippet' %>"><%= s.erlang %></pre>
+                <div id="<%= 'erlang_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'erlang_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'erlang_' + s.trigger + '\'' %>, 'erlang', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'erlang_' + s.trigger + '\'' %>, <%= '\'erlang_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'clojure') %>
-            <td><pre><%= s.clojure %></pre></td>
+            <td ondblclick="toggle(<%= '\'clojure_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'clojure_' + s.trigger + '_snippet' %>"><%= s.clojure %></pre>
+                <div id="<%= 'clojure_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'clojure_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'clojure_' + s.trigger + '\'' %>, 'clojure', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'clojure_' + s.trigger + '\'' %>, <%= '\'clojure_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'rails4') %>
-            <td><pre><%= s.rails4 %></pre></td>
+            <td ondblclick="toggle(<%= '\'rails4_' + s.trigger + '\'' %>); return false;">
+                <pre id="<%= 'rails4_' + s.trigger + '_snippet' %>"><%= s.rails4 %></pre>
+                <div id="<%= 'rails4_' + s.trigger %>" style="display: none;">
+                    <textarea id="<%= 'rails4_' + s.trigger + '_snippet_edit' %>" class="inline_edit"></textarea>
+                    <br/>
+                    <button class="submit" onclick="saveSnippet(<%= '\'rails4_' + s.trigger + '\'' %>, 'rails4', <%= '\'' + s.trigger + '\'' %>);">submit</button>
+                    <button class="cancel" onclick="cancelSnippetEdit(<%= '\'rails4_' + s.trigger + '\'' %>, <%= '\'rails4_' + s.trigger + '_snippet\'' %>);">cancel</button>
+                </div>
+            </td>
         <% end %>
     </tr>
     <% end %>

@@ -4,53 +4,106 @@ class SnippetsController < ApplicationController
     helper_method :sort_column, :sort_direction
 
     def saveSnippetViaAjax
+        success = false
+        jsonResults = {}
+
         # Define params.
-        lang = params[:lang]
-        trigger = params[:trigger]
-        snippet = params[:snippet]
-        puts "lang=" + lang
-        puts "trigger=" + trigger
-        puts "snippet=" + snippet
+        lang = params[:lang].to_s
+        trigger = params[:trigger].to_s
+        snippet = params[:snippet].to_s
 
-        # Find the snippet object.
-        s = Snippet.find_by trigger: trigger
-        case lang
-        when "ruby2"
-            s.ruby2 = snippet
-        when "bash4"
-            s.bash4 = snippet
-        when "vim"
-            s.vim = snippet
-        when "java"
-            s.java = snippet
-        when "vbs"
-            s.vbs = snippet
-        when "python3"
-            s.python3 = snippet
-        when "js"
-            s.js = snippet
-        when "winshell"
-            s.winshell = snippet
-        when "powershell"
-            s.powershell = snippet
-        when "groovy"
-            s.groovy = snippet
-        when "c"
-            s.c = snippet
-        when "cpp"
-            s.cpp = snippet
-        when "scala"
-            s.scala = snippet
-        when "erlang"
-            s.erlang = snippet
-        when "clojure"
-            s.clojure = snippet
-        when "rails4"
-            s.rails4 = snippet
+        if trigger == ""
+            success = false
+            jsonResults[:errorMessage] = "Trigger can't be blank!"
+        else
+            # Hack.  When blank string comes in, snippet is a
+            # "ActionController::Parameters" object and then
+            # becomes "{}" upon to_s.
+            if snippet != params[:snippet]
+                snippet = ""
+            end
+
+            # Find the snippet object.
+            s = Snippet.find_by trigger: trigger
+
+            # Change snippet value.
+            oldSnippetValue = "?"
+            case lang
+            when "ruby2"
+                oldSnippetValue = s.ruby2
+                s.ruby2 = snippet
+            when "bash4"
+                oldSnippetValue = s.bash4
+                s.bash4 = snippet
+            when "vim"
+                oldSnippetValue = s.vim
+                s.vim = snippet
+            when "java"
+                oldSnippetValue = s.java
+                s.java = snippet
+            when "vbs"
+                oldSnippetValue = s.vbs
+                s.vbs = snippet
+            when "python3"
+                oldSnippetValue = s.python3
+                s.python3 = snippet
+            when "js"
+                oldSnippetValue = s.js
+                s.js = snippet
+            when "jquery"
+                oldSnippetValue = s.jquery
+                s.jquery = snippet
+            when "winshell"
+                oldSnippetValue = s.winshell
+                s.winshell = snippet
+            when "powershell"
+                oldSnippetValue = s.powershell
+                s.powershell = snippet
+            when "groovy"
+                oldSnippetValue = s.groovy
+                s.groovy = snippet
+            when "c"
+                oldSnippetValue = s.c
+                s.c = snippet
+            when "cpp"
+                oldSnippetValue = s.cpp
+                s.cpp = snippet
+            when "scala"
+                oldSnippetValue = s.scala
+                s.scala = snippet
+            when "erlang"
+                oldSnippetValue = s.erlang
+                s.erlang = snippet
+            when "clojure"
+                oldSnippetValue = s.clojure
+                s.clojure = snippet
+            when "rails4"
+                oldSnippetValue = s.rails4
+                s.rails4 = snippet
+            when "desc"
+                oldSnippetValue = s.desc
+                s.desc = snippet
+            else
+                success = false
+                jsonResults[:errorMessage] = "Unknown lang (" + lang + ")"
+            end
+
+            # Save.
+            if snippet == oldSnippetValue
+                success = true
+            else
+                success = s.save
+            end
         end
-        puts s.save
 
-        render nothing: true
+        # Return results.
+        jsonResults[:success] = success.to_s
+        if success
+            jsonResults[:snippetValue] = snippet
+        else
+            jsonResults[:snippetValue] = oldSnippetValue
+        end
+        render json: jsonResults
     end
 
     def index #{{{
@@ -216,6 +269,10 @@ class SnippetsController < ApplicationController
             if !params[:langs] or (params[:langs] and params[:langs].include? 'js')
                 output += "\n\n==Js\n"
                 snippets.each { |s| output += toStringSnippetForVim(s.trigger, s.js) if s.js != nil and s.js != "" }
+            end
+            if !params[:langs] or (params[:langs] and params[:langs].include? 'jquery')
+                output += "\n\n==jQuery\n"
+                snippets.each { |s| output += toStringSnippetForVim(s.trigger, s.jquery) if s.jquery != nil and s.jquery != "" }
             end
             @xml = output
         else

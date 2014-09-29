@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140330005419) do
+ActiveRecord::Schema.define(version: 20140929002440) do
 
   create_table "snippets", force: true do |t|
     t.text     "bash4"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20140330005419) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "rails4"
+    t.string   "jquery"
   end
 
   add_index "snippets", ["trigger"], name: "index_snippets_on_trigger", unique: true

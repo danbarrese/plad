@@ -12,23 +12,27 @@
         </ol>
     </div>
     -->
-    <p>Choose an IDE:
-        <ol>
-            <li><%= link_to "Vim \"IDE\"", export_path + "?ide=vim" %></li>
-                <ul>
-                    <li><%= link_to "Java", export_path + "?ide=vim&langs=java" %></li>
-                    <li><%= link_to "Python 3", export_path + "?ide=vim&langs=python3" %></li>
-                    <li><%= link_to "Ruby 2", export_path + "?ide=vim&langs=ruby2" %></li>
-                    <li><%= link_to "BASH 4", export_path + "?ide=vim&langs=bash4" %></li>
-                    <li><%= link_to "Vim Script", export_path + "?ide=vim&langs=vim" %></li>
-                    <li><%= link_to "Scala", export_path + "?ide=vim&langs=scala" %></li>
-                    <li><%= link_to "Js", export_path + "?ide=vim&langs=js" %></li>
-                    <li><%= link_to "(All languages)", export_path + "?ide=vim" %></li>
-                </ul>
-            <li><%= link_to "IntelliJ IDEA", export_path + "?ide=idea" %></li>
-            <li><%= link_to "NetBeans", export_path + "?ide=nb" %></li>
-        </ol>
-    </p>
-<% else %>
-    <pre><%= @xml %></pre>
 <% end %>
+    <div style="display: inline-block; width:300px; vertical-align: top;">
+        <p>Choose an IDE:
+            <ol>
+                <li>Vim "IDE"</li>
+                    <ul>
+                        <li><%= link_to "BASH 4", export_path + "?ide=vim&langs=bash4" %></li>
+                        <li><%= link_to "Java", export_path + "?ide=vim&langs=java" %></li>
+                        <li><%= link_to "Js", export_path + "?ide=vim&langs=js" %></li>
+                        <li><%= link_to "Python 3", export_path + "?ide=vim&langs=python3" %></li>
+                        <li><%= link_to "Ruby 2", export_path + "?ide=vim&langs=ruby2" %></li>
+                        <li><%= link_to "Scala", export_path + "?ide=vim&langs=scala" %></li>
+                        <li><%= link_to "Vim Script", export_path + "?ide=vim&langs=vim" %></li>
+                        <li><%= link_to "jQuery", export_path + "?ide=vim&langs=jquery" %></li>
+                        <li><%= link_to "(All languages)", export_path + "?ide=vim" %></li>
+                    </ul>
+                <li><%= link_to "IntelliJ IDEA", export_path + "?ide=idea" %></li>
+                <li><%= link_to "NetBeans", export_path + "?ide=nb" %></li>
+            </ol>
+        </p>
+    </div>
+    <div style="display: inline-block; vertical-align: top;">
+        <textarea style="width: 500px; height: 400px;"><%= @xml %></textarea>
+    </div>

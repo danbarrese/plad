@@ -5,4 +5,5 @@ Plad::Application.routes.draw do
     #match '/test', to: "snippets#test", via: :get
     match '/export', to: "snippets#export", via: :get
     match '/saveSnippetViaAjax', to: "snippets#saveSnippetViaAjax", via: :get
+    match '/saveSnippetViaAjax', to: "snippets#saveSnippetViaAjax", via: :post
 end
