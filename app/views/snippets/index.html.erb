@@ -29,10 +29,10 @@
             <th><%= sortable "python3", "Python 3" %></th>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'js') %>
-            <th><%= sortable "js", "JavaScript" %></th>
+            <th><%= sortable "js", "JavaScript (*js)" %></th>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'jquery') %>
-            <th><%= sortable "jquery", "jQuery" %></th>
+            <th><%= sortable "jquery", "jQuery (*jq)" %></th>
         <% end %>
         <% if !params[:langs] or (params[:langs] and params[:langs].include? 'winshell') %>
             <th><%= sortable "winshell", "Windows Shell" %></th>

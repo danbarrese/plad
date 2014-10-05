@@ -12,11 +12,17 @@ var fadeTime = 100; // milliseconds
 var fadeTimeIn = 200; // milliseconds
 var fadeTimeOut = 200; // milliseconds
 
+function decodeHtml(html) {
+    var str = html.replace('&lt;', '<');
+    str = str.replace('&gt;', '>');
+    return str;
+}
+
 function toggle(id) {
     if (document.getElementById(id).style.display == "none") {
         $('#' +id + "_snippet").fadeOut(0);
         $('#' +id + "_link").fadeOut(0);
-        document.getElementById(id + "_snippet_edit").value = document.getElementById(id + "_snippet").innerHTML;
+        document.getElementById(id + "_snippet_edit").value = decodeHtml(document.getElementById(id + "_snippet").innerHTML);
         $('#' +id).fadeIn(fadeTimeIn);
         $('#' +id +"_snippet_edit").focus();
     } else {

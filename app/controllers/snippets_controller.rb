@@ -268,11 +268,11 @@ class SnippetsController < ApplicationController
             end
             if !params[:langs] or (params[:langs] and params[:langs].include? 'js')
                 output += "\n\n==Js\n"
-                snippets.each { |s| output += toStringSnippetForVim(s.trigger, s.js) if s.js != nil and s.js != "" }
+                snippets.each { |s| output += toStringSnippetForVim(s.trigger + 'js', s.js) if s.js != nil and s.js != "" }
             end
             if !params[:langs] or (params[:langs] and params[:langs].include? 'jquery')
                 output += "\n\n==jQuery\n"
-                snippets.each { |s| output += toStringSnippetForVim(s.trigger, s.jquery) if s.jquery != nil and s.jquery != "" }
+                snippets.each { |s| output += toStringSnippetForVim(s.trigger + 'jq', s.jquery) if s.jquery != nil and s.jquery != "" }
             end
             @xml = output
         else
