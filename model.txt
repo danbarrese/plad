@@ -1,0 +1,47 @@
+PLAD: Programming Language Agnostic Development
+Dan Barrese (danbarrese.com)
+May 31, 2014
+
+> HAS
+    + Snippet
+        - Trigger
+        - Prefix
+        - Symlinks (optional)
+        - Category (optional)
+        - Description (optional)
+        + Variables
+            - Name/Number
+            - Expression (optional)
+            - Default Value (optional)
+        + Scopes
+            + HTML
+                - HTML Text (default)
+                - Other (default)
+            + XML
+                - XSL Text (default)
+                - XML Text (default)
+                - Other (default)
+            + Java
+                - Statement (default)
+                - Expression
+                - Declaration
+                - Comment
+                - String
+                - Smart Type Completion
+                - Other (default)
+            + Groovy
+                - Statement (default)
+                - Expression
+                - Declaration
+                - Other (default)
+            + Maven
+            + Other
+
+> DOES
+    + Show all snippets
+    + CRUD snippets
+    + Export snippets
+        - IntelliJ IDEA (XML)
+        - Vim SnipMate (Plain Text)
+        - Eclipse (XML)
+    + Backup snippets
